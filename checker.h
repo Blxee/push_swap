@@ -13,6 +13,4 @@
 #ifndef CHECKER_H
 # define CHECKER_H
 
-# include "libft/include/ft_printf.h"
-
 #endif
