@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:53:27 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/28 10:56:55 by blxee            ###   ########.fr       */
+/*   Updated: 2025/11/29 11:19:09 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,39 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct s_stack {
-  int val;
-  struct s_stack *prev;
-  struct s_stack *next;
-} t_stack;
+typedef struct s_cicular_stack 
+{
+  int	*buf;
+  int	capacity;
+  int	start;
+  int	len;
+} t_cicular_stack;
 
 typedef struct s_swap_stack {
-  t_stack *a;
-  t_stack *b;
+  t_cicular_stack a;
+  t_cicular_stack b;
 } t_swap_stack;
 
-int	ft_atoi(char *str, int *fail);
+typedef void (*t_operation)(t_swap_stack *swap);
 
-void	stack_add_front(t_stack **stack, int val);
-void	stack_add_back(t_stack **stack, int val);
-void	stack_delete(t_stack **stack);
+t_swap_stack  *swap_stack_new(int num_size);
+void	        swap_stack_free(t_swap_stack *swap);
 
-t_swap_stack	*swap_stack_new(void);
-void	swap_stack_free(t_swap_stack *stacks);
+int   ft_atoi(char *str, int *fail);
+void  ft_putstr(const char *str);
 
-void	sa(t_swap_stack *stacks);
-void	sb(t_swap_stack *stacks);
-void	ss(t_swap_stack *stacks);
-void	pa(t_swap_stack *stacks);
-void	pb(t_swap_stack *stacks);
-void	ra(t_swap_stack *stacks);
-void	rb(t_swap_stack *stacks);
-void	rr(t_swap_stack *stacks);
-void	rra(t_swap_stack *stacks);
-void	rrb(t_swap_stack *stacks);
-void	rrr(t_swap_stack *stacks);
+void  apply_op(t_swap_stack *swap, t_operation op);
+
+void	sa(t_swap_stack *swap);
+void	sb(t_swap_stack *swap);
+void	ss(t_swap_stack *swap);
+void	pa(t_swap_stack *swap);
+void	pb(t_swap_stack *swap);
+void	ra(t_swap_stack *swap);
+void	rb(t_swap_stack *swap);
+void	rr(t_swap_stack *swap);
+void	rra(t_swap_stack *swap);
+void	rrb(t_swap_stack *swap);
+void	rrr(t_swap_stack *swap);
 
 #endif
