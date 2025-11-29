@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:53:27 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/18 17:55:41 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/28 10:56:55 by blxee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ typedef struct s_stack {
   int val;
   struct s_stack *prev;
   struct s_stack *next;
-  struct s_stack *last;
 } t_stack;
 
 typedef struct s_swap_stack {
@@ -30,12 +29,12 @@ typedef struct s_swap_stack {
 
 int	ft_atoi(char *str, int *fail);
 
-void	stack_add_front(t_stack **stacks, int val);
-void	stack_add_back(t_stack **stacks, int val);
-void	stack_delete(t_stack **stacks);
+void	stack_add_front(t_stack **stack, int val);
+void	stack_add_back(t_stack **stack, int val);
+void	stack_delete(t_stack **stack);
 
 t_swap_stack	*swap_stack_new(void);
-void	swap_stack_free(void);
+void	swap_stack_free(t_swap_stack *stacks);
 
 void	sa(t_swap_stack *stacks);
 void	sb(t_swap_stack *stacks);
