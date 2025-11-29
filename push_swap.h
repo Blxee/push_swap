@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:53:27 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/29 11:19:09 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/29 14:02:57 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 
 typedef struct s_cicular_stack 
 {
-  int	*buf;
-  int	capacity;
-  int	start;
-  int	len;
+  int     *buf;
+  size_t	capacity;
+  size_t	start;
+  size_t	len;
 } t_cicular_stack;
 
 typedef struct s_swap_stack {
@@ -31,9 +31,13 @@ typedef struct s_swap_stack {
 
 typedef void (*t_operation)(t_swap_stack *swap);
 
-t_swap_stack  *swap_stack_new(int num_size);
+t_swap_stack  *swap_stack_new(size_t num_size);
 void	        swap_stack_free(t_swap_stack *swap);
 
+int   *stack_get(t_cicular_stack *stack, size_t idx);
+void  stack_push(t_cicular_stack *stack, int val);
+int   stack_pop(t_cicular_stack *stack);
+ 
 int   ft_atoi(char *str, int *fail);
 void  ft_putstr(const char *str);
 
