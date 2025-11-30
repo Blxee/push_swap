@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/30 16:37:31 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/30 17:17:31 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,16 @@ t_swap_stack	*swap_stack_new(long num_size)
 	return (swap);
 }
 
-t_swap_stack			**get_swap_stacks(void)
+void	swap_stack_free(t_swap_stack **swap)
 {
-	static t_swap_stack *s_swap;
-	return (&s_swap);
-}
-
-void	swap_stack_free(void)
-{
-	t_swap_stack *swap;
-
-	swap = *get_swap_stacks();
-	if (!swap)
+	if (!swap || !*swap)
 		return ;
-	if (swap->a.buf)
-		free(swap->a.buf);
-	if (swap->b.buf)
-		free(swap->b.buf);
-	free(swap);
-	*get_swap_stacks() = NULL;
+	if ((*swap)->a.buf)
+		free((*swap)->a.buf);
+	if ((*swap)->b.buf)
+		free((*swap)->b.buf);
+	free(*swap);
+	*swap = NULL;
 }
 
 int   *stack_get(t_circular_stack *stack, long idx)
@@ -293,26 +284,49 @@ long count_args(int argc, char **argv)
 	return (count);
 }
 
+int						is_number_repeated(t_circular_stack *stack)
+{
+	int		num;
+	long	i;
+
+	// WARN: make sure to change this according to the stack fill order
+	num = *stack_get(stack, -1);
+	i = 0;
+	while (i < stack->len - 1)
+	{
+		if (num == *stack_get(stack, i))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_swap_stack *swap;
 	char **splt;
 	int i;
+	int fail;
 
 	swap = swap_stack_new(count_args(argc, argv));
 	if (argc == 1 || !swap)
 		return (0);
-	*get_swap_stacks() = swap;
+	fail = 0;
 	while (--argc > 0)
 	{
 		splt = ft_split(*(++argv));
 		i = 0;
 		while (splt[i])
-			stack_push(&swap->a, ft_atoi(splt[i++]));
+			stack_push(&swap->a, ft_atoi(splt[i++], &fail));
+		i = 0;
+		while (splt[i])
+			free(splt[i++]);
 		free(splt);
+		if (fail || is_number_repeated(&swap->a))
+			return (ft_putstr("Error\n"), swap_stack_free(&swap), 0);
 	}
 	print_stack(&swap->a);
 	print_stack(&swap->b);
-	swap_stack_free();
+	swap_stack_free(&swap);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:53:27 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/30 16:36:48 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/30 17:14:37 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef void			(*t_operation)(t_swap_stack *swap);
 
 t_swap_stack			*swap_stack_new(long num_size);
 t_swap_stack			**get_swap_stacks(void);
-void					swap_stack_free(void);
+void					swap_stack_free(t_swap_stack **swap);
 
 int						*stack_get(t_circular_stack *stack, long idx);
 void					stack_push(t_circular_stack *stack, int val);
@@ -43,8 +43,9 @@ int						stack_pop(t_circular_stack *stack);
 
 int						ft_isspace(int c);
 char					**ft_split(char const *s);
-int						ft_atoi(const char *nptr);
+int						ft_atoi(const char *nptr, int *fail);
 void					ft_putstr(const char *str);
+int						is_number_repeated(t_circular_stack *stack);
 
 void					apply_op(t_swap_stack *swap, t_operation op);
 

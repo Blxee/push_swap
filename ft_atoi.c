@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 14:52:36 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/30 16:37:59 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/30 16:59:44 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_setsign(int *sign, size_t *i, const char *nptr)
 	}
 }
 
-int	ft_atoi(const char *nptr)
+int	ft_atoi(const char *nptr, int *fail)
 {
 	size_t	i;
 	long	nbr;
@@ -44,11 +44,11 @@ int	ft_atoi(const char *nptr)
 	while (nptr[i] && !ft_isspace(nptr[i]))
 	{
 		if (!ft_isdigit(nptr[i]))
-			return (swap_stack_free(), ft_putstr("Error\n"), exit(255), 0);
+			return (fail = 0, 0);
 		nbr = nbr * 10 + nptr[i] - '0';
 		if ((sign == 1 && nbr > INT_MAX)
 			|| (sign == -1 && nbr > -(long)INT_MIN))
-			return (swap_stack_free(), ft_putstr("Error\n"), exit(255), 0);
+			return (*fail = 1, 0);
 		i++;
 	}
 	return (sign * nbr);
