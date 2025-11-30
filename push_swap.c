@@ -6,13 +6,13 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/29 14:05:23 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/30 11:19:21 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_swap_stack	*swap_stack_new(size_t num_size)
+t_swap_stack	*swap_stack_new(long num_size)
 {
 	t_swap_stack *swap;
 	
@@ -23,19 +23,17 @@ t_swap_stack	*swap_stack_new(size_t num_size)
 	swap->a.len = 0;
 	swap->a.start = 0;
 
-	swap->a = (t_cicular_stack) {
-		.buf = malloc(sizeof(int) * num_size),
+	swap->a = (t_circular_stack) {
+		.buf = malloc(sizeof(int) * (size_t)num_size),
 		.capacity = num_size, .len = 0, .start = 0,
 	};
-	swap->a.buf = malloc(sizeof(int) * num_size);
 	if (!swap->a.buf)
 		return (free(swap), NULL);
 
-	swap->b = (t_cicular_stack) {
-		.buf = malloc(sizeof(int) * num_size),
+	swap->b = (t_circular_stack) {
+		.buf = malloc(sizeof(int) * (size_t)num_size),
 		.capacity = num_size, .len = 0, .start = 0,
 	};
-	swap->b.buf = malloc(sizeof(int) * num_size);
 	if (!swap->b.buf)
 		return (free(swap->a.buf), free(swap), NULL);
 	return (swap);
@@ -52,31 +50,57 @@ void	swap_stack_free(t_swap_stack *swap)
 	free(swap);
 }
 
-int   *stack_get(t_cicular_stack *stack, size_t idx)
+int   *stack_get(t_circular_stack *stack, long idx)
 {
-	size_t	len;
-	int		offset;
+	long	len;
+	long	offset;
 
 	len = stack->len;
 	offset = stack->start;
-	idx = (idx + offset) % len;
+	idx += offset;
+	while (idx < 0)
+		idx += len;
+	idx %= len;
 	return (&stack->buf[idx]);
 }
 
-void  stack_push(t_cicular_stack *stack, int val)
+void  stack_push(t_circular_stack *stack, int val)
 {
-	size_t i;
+	long i;
 
+	if (!stack)
+		return ;
 	i = stack->len;
 	while (i > stack->start)
 	{
 		stack->buf[i] = stack->buf[i - 1];
 		i--;
 	}
-	*stack_get(a, a->len++) = *stack_get(b, b->len--);
+	(stack->len)++;
+	stack->buf[stack->start++] = val;
 }
 
-int   stack_pop(t_cicular_stack *stack);
+int   stack_pop(t_circular_stack *stack)
+{
+	long i;
+	int val;
+
+	if (!stack || stack->len == 0)
+		return (0);
+	val = *stack_get(stack, -1);
+	i = 0;
+	while (i < stack->len - stack->start)
+	{
+		if (stack->start == 0 && i == 0)
+			stack->buf[stack->len - 1] = stack->buf[0];
+		else
+			stack->buf[stack->start + i - 1] = stack->buf[stack->start + i];
+		i++;
+	}
+	(stack->len)--;
+	(stack->start)--;
+	return (val);
+}
 
 int	ft_atoi(char *str, int *fail)
 {
@@ -140,7 +164,7 @@ void	apply_op(t_swap_stack *swap, t_operation op)
 
 void	sa(t_swap_stack *swap)
 {
-	t_cicular_stack *stack;
+	t_circular_stack *stack;
 	int tmp;
 
 	stack = &swap->a;
@@ -153,7 +177,7 @@ void	sa(t_swap_stack *swap)
 
 void	sb(t_swap_stack *swap)
 {
-	t_cicular_stack *stack;
+	t_circular_stack *stack;
 	int tmp;
 
 	stack = &swap->b;
@@ -172,9 +196,9 @@ void	ss(t_swap_stack *swap)
 
 void	pa(t_swap_stack *swap)
 {
-	t_cicular_stack *a;
-	t_cicular_stack *b;
-	size_t i;
+	t_circular_stack *a;
+	t_circular_stack *b;
+	long i;
 
 	a = &swap->a;
 	b = &swap->b;
@@ -194,7 +218,7 @@ void	pb(t_swap_stack *swap)
 
 void	ra(t_swap_stack *swap)
 {
-	t_cicular_stack *a;
+	t_circular_stack *a;
 
 	a = &swap->a;
 	a->start++;
@@ -202,7 +226,7 @@ void	ra(t_swap_stack *swap)
 
 void	rb(t_swap_stack *swap)
 {
-	t_cicular_stack *b;
+	t_circular_stack *b;
 
 	b = &swap->b;
 	b->start++;
@@ -216,7 +240,7 @@ void	rr(t_swap_stack *swap)
 
 void	rra(t_swap_stack *swap)
 {
-	t_cicular_stack *a;
+	t_circular_stack *a;
 
 	a = &swap->a;
 	a->start--;
@@ -224,7 +248,7 @@ void	rra(t_swap_stack *swap)
 
 void	rrb(t_swap_stack *swap)
 {
-	t_cicular_stack *b;
+	t_circular_stack *b;
 
 	b = &swap->b;
 	b->start--;
@@ -237,10 +261,10 @@ void	rrr(t_swap_stack *swap)
 }
 
 #include <stdio.h>
-void print_stack(t_cicular_stack *stack)
+void print_stack(t_circular_stack *stack)
 {
 	printf("\nstack\n");
-	for (size_t i = 0; i < stack->len; i++)
+	for (long i = 0; i < stack->len; i++)
 		printf("%d\n", *stack_get(stack, i));
 }
 
@@ -259,14 +283,15 @@ int	main(int argc, char **argv)
 		nbr = ft_atoi(*(++argv), &fail);
 		if (fail)
 			return (swap_stack_free(swap), 0);
-		// swap->a.buf[swap->a.len++] = nbr;
-		swap->b.buf[swap->b.len++] = nbr;
+		swap->a.buf[swap->a.len++] = nbr;
 	}
+	printf("len: %zu, start: %zu\n", swap->a.len, swap->a.start);
+	// swap->a.start = 4;
 	print_stack(&swap->a);
-	print_stack(&swap->b);
-	pa(swap);
+	printf("num: %d\n", stack_pop(&swap->a));
 	print_stack(&swap->a);
-	print_stack(&swap->b);
+	// stack_push(&swap->a, 12);
+	// print_stack(&swap->a);
 	swap_stack_free(swap);
 	return (0);
 }
