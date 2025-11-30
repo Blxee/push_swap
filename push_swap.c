@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/30 15:01:58 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/30 15:56:10 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,8 +255,31 @@ void print_stack(t_circular_stack *stack)
 long count_args(int argc, char **argv)
 {
 	long count;
+	long i;
+	long j;
+	char *str;
 
 	count = 0;
+	while (--argc > 0)
+	{
+		str = *(++argv);
+		i = 0;
+		while (str[i])
+		{
+			while (str[i] && ft_isspace(str[i]))
+				i++;
+			j = 0;
+			while (str[i + j] && !ft_isspace(str[i + j]))
+				j++;
+			i += j;
+			if (j)
+				count++;
+			else if (str[i])
+				i++;
+		}
+		i++;
+	}
+
 	return (count);
 }
 
@@ -267,8 +290,8 @@ int	main(int argc, char **argv)
 	int i;
 	// int fail;
 
-	swap = swap_stack_new(100);
-	if (!swap)
+	swap = swap_stack_new(count_args(argc, argv));
+	if (argc == 1 || !swap)
 		return (0);
 	// fail = 0;
 	while (--argc > 0)

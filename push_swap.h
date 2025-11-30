@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:53:27 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/30 13:51:00 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/30 16:01:37 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 
 typedef struct s_cicular_stack
 {

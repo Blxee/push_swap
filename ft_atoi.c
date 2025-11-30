@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 14:52:36 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/30 14:05:22 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/30 16:13:27 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,14 @@ int	ft_atoi(const char *nptr)
 	while (ft_isspace(nptr[i]))
 		i++;
 	ft_setsign(&sign, &i, nptr);
-	while (ft_isdigit(nptr[i]))
+	while (nptr[i] && !ft_isspace(nptr[i]))
 	{
+		if (!ft_isdigit(nptr[i]))
+			return (ft_putstr("Error\n"), exit(255), 0);
 		nbr = nbr * 10 + nptr[i] - '0';
-		if (nbr < 0)
-		{
-			if (sign > 0)
-				return (-1);
-			else
-				return (0);
-		}
+		if ((sign == 1 && nbr > INT_MAX)
+			|| (sign == -1 && nbr > -(long)INT_MIN))
+			return (ft_putstr("Error\n"), exit(255), 0);
 		i++;
 	}
 	return (sign * nbr);
