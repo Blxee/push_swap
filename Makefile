@@ -4,7 +4,7 @@ CFLAGS = -Wall -Werror -Wextra                   -g
 
 NAME = push_swap
 
-SRCS = push_swap.c
+SRCS = push_swap.c ft_atoi.c ft_split.c ft_isspace.c
 
 OBJS = $(SRCS:.c=.o)
 

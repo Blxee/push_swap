@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/30 11:19:21 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/30 15:01:58 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,31 +99,9 @@ int   stack_pop(t_circular_stack *stack)
 	}
 	(stack->len)--;
 	(stack->start)--;
+	if (stack->start < 0)
+		stack->start = stack->len - 1;
 	return (val);
-}
-
-int	ft_atoi(char *str, int *fail)
-{
-  int prev;
-  int nbr;
-  int sign;
-
-  prev = 0;
-  nbr = 0;
-  sign = 1;
-  if (*str == '-')
-    sign = -1;
-  while (*str)
-  {
-    if (*str < '0' || *str > '9')
-      *fail = 1;
-    nbr = nbr * 10 + *str - '0';
-    if (nbr < prev)
-      *fail = 1;
-    prev = nbr;
-    str++;
-  }
-  return (sign * nbr);
 }
 
 void	ft_putstr(const char *str)
@@ -198,22 +176,20 @@ void	pa(t_swap_stack *swap)
 {
 	t_circular_stack *a;
 	t_circular_stack *b;
-	long i;
 
 	a = &swap->a;
 	b = &swap->b;
-	i = a->len;
-	while (i > a->start)
-	{
-		a->buf[i] = a->buf[i - 1];
-		i--;
-	}
-	*stack_get(a, a->len++) = *stack_get(b, b->len--);
+	stack_push(a, stack_pop(b));
 }
 
 void	pb(t_swap_stack *swap)
 {
-	(void)swap;
+	t_circular_stack *a;
+	t_circular_stack *b;
+
+	a = &swap->a;
+	b = &swap->b;
+	stack_push(b, stack_pop(a));
 }
 
 void	ra(t_swap_stack *swap)
@@ -221,7 +197,9 @@ void	ra(t_swap_stack *swap)
 	t_circular_stack *a;
 
 	a = &swap->a;
-	a->start++;
+	a->start--;
+	if (a->start < 0)
+		a->start = a->len - 1;
 }
 
 void	rb(t_swap_stack *swap)
@@ -229,7 +207,9 @@ void	rb(t_swap_stack *swap)
 	t_circular_stack *b;
 
 	b = &swap->b;
-	b->start++;
+	b->start--;
+	if (b->start < 0)
+		b->start = b->len - 1;
 }
 
 void	rr(t_swap_stack *swap)
@@ -243,7 +223,9 @@ void	rra(t_swap_stack *swap)
 	t_circular_stack *a;
 
 	a = &swap->a;
-	a->start--;
+	a->start++;
+	if (a->start >= a->len)
+		a->start = 0;
 }
 
 void	rrb(t_swap_stack *swap)
@@ -251,7 +233,9 @@ void	rrb(t_swap_stack *swap)
 	t_circular_stack *b;
 
 	b = &swap->b;
-	b->start--;
+	b->start++;
+	if (b->start >= b->len)
+		b->start = 0;
 }
 
 void	rrr(t_swap_stack *swap)
@@ -268,30 +252,37 @@ void print_stack(t_circular_stack *stack)
 		printf("%d\n", *stack_get(stack, i));
 }
 
+long count_args(int argc, char **argv)
+{
+	long count;
+
+	count = 0;
+	return (count);
+}
+
 int	main(int argc, char **argv)
 {
 	t_swap_stack *swap;
-	int nbr;
-	int fail;
+	char **splt;
+	int i;
+	// int fail;
 
 	swap = swap_stack_new(100);
 	if (!swap)
 		return (0);
-	fail = 0;
+	// fail = 0;
 	while (--argc > 0)
 	{
-		nbr = ft_atoi(*(++argv), &fail);
-		if (fail)
-			return (swap_stack_free(swap), 0);
-		swap->a.buf[swap->a.len++] = nbr;
+		splt = ft_split(*(++argv));
+		i = 0;
+		while (splt[i])
+			stack_push(&swap->a, ft_atoi(splt[i++]));
+		free(splt);
+		// if (fail)
+		// 	return (swap_stack_free(swap), 0);
 	}
-	printf("len: %zu, start: %zu\n", swap->a.len, swap->a.start);
-	// swap->a.start = 4;
 	print_stack(&swap->a);
-	printf("num: %d\n", stack_pop(&swap->a));
-	print_stack(&swap->a);
-	// stack_push(&swap->a, 12);
-	// print_stack(&swap->a);
+	print_stack(&swap->b);
 	swap_stack_free(swap);
 	return (0);
 }

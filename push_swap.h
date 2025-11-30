@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:53:27 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/30 10:04:32 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/30 13:51:00 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ int						*stack_get(t_circular_stack *stack, long idx);
 void					stack_push(t_circular_stack *stack, int val);
 int						stack_pop(t_circular_stack *stack);
 
-int						ft_atoi(char *str, int *fail);
+int						ft_isspace(int c);
+char					**ft_split(char const *s);
+int						ft_atoi(const char *nptr);
 void					ft_putstr(const char *str);
 
 void					apply_op(t_swap_stack *swap, t_operation op);
