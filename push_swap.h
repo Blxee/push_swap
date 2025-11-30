@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:53:27 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/30 17:14:37 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/30 18:07:48 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ char					**ft_split(char const *s);
 int						ft_atoi(const char *nptr, int *fail);
 void					ft_putstr(const char *str);
 int						is_number_repeated(t_circular_stack *stack);
-
-void					apply_op(t_swap_stack *swap, t_operation op);
 
 void					sa(t_swap_stack *swap);
 void					sb(t_swap_stack *swap);

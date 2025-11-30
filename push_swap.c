@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/30 17:17:31 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/30 18:10:45 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,37 +115,12 @@ void	ft_putstr(const char *str)
 	write(1, str, len);
 }
 
-void	apply_op(t_swap_stack *swap, t_operation op)
-{
-	static const t_operation keys[] = { sa, sb, ss, pa, pb, ra, rb, rr, rra, rrb, rrr, };
-	static const char *vals[] = {
-		"sa\n",	 "sb\n",  "sa\nsb\n",
-		"pa\n",  "pb\n",
-		"ra\n",  "rb\n",  "ra\nrb\n",
-		"rra\n", "rrb\n", "rra\nrrb\n",
-	};
-	int i;
-
-	if (op && swap)
-	{
-		op(swap);
-		i = 0;
-		while (i < (int)(sizeof(keys) / sizeof(*keys)))
-		{
-			if (keys[i] == op)
-			{
-				ft_putstr(vals[i]);
-			}
-			i++;
-		}
-	}
-}
-
 void	sa(t_swap_stack *swap)
 {
 	t_circular_stack *stack;
 	int tmp;
 
+	ft_putstr("sa\n");
 	stack = &swap->a;
 	if (stack->len < 2)
 		return ;
@@ -159,6 +134,7 @@ void	sb(t_swap_stack *swap)
 	t_circular_stack *stack;
 	int tmp;
 
+	ft_putstr("sb\n");
 	stack = &swap->b;
 	if (stack->len < 2)
 		return ;
@@ -178,6 +154,7 @@ void	pa(t_swap_stack *swap)
 	t_circular_stack *a;
 	t_circular_stack *b;
 
+	ft_putstr("pa\n");
 	a = &swap->a;
 	b = &swap->b;
 	stack_push(a, stack_pop(b));
@@ -188,6 +165,7 @@ void	pb(t_swap_stack *swap)
 	t_circular_stack *a;
 	t_circular_stack *b;
 
+	ft_putstr("pb\n");
 	a = &swap->a;
 	b = &swap->b;
 	stack_push(b, stack_pop(a));
@@ -197,6 +175,7 @@ void	ra(t_swap_stack *swap)
 {
 	t_circular_stack *a;
 
+	ft_putstr("ra\n");
 	a = &swap->a;
 	a->start--;
 	if (a->start < 0)
@@ -207,6 +186,7 @@ void	rb(t_swap_stack *swap)
 {
 	t_circular_stack *b;
 
+	ft_putstr("rb\n");
 	b = &swap->b;
 	b->start--;
 	if (b->start < 0)
@@ -223,6 +203,7 @@ void	rra(t_swap_stack *swap)
 {
 	t_circular_stack *a;
 
+	ft_putstr("rra\n");
 	a = &swap->a;
 	a->start++;
 	if (a->start >= a->len)
@@ -233,6 +214,7 @@ void	rrb(t_swap_stack *swap)
 {
 	t_circular_stack *b;
 
+	ft_putstr("rrb\n");
 	b = &swap->b;
 	b->start++;
 	if (b->start >= b->len)
