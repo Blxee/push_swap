@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/30 15:56:10 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/30 16:37:31 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,17 @@ t_swap_stack	*swap_stack_new(long num_size)
 	return (swap);
 }
 
-void	swap_stack_free(t_swap_stack *swap)
+t_swap_stack			**get_swap_stacks(void)
 {
+	static t_swap_stack *s_swap;
+	return (&s_swap);
+}
+
+void	swap_stack_free(void)
+{
+	t_swap_stack *swap;
+
+	swap = *get_swap_stacks();
 	if (!swap)
 		return ;
 	if (swap->a.buf)
@@ -48,6 +57,7 @@ void	swap_stack_free(t_swap_stack *swap)
 	if (swap->b.buf)
 		free(swap->b.buf);
 	free(swap);
+	*get_swap_stacks() = NULL;
 }
 
 int   *stack_get(t_circular_stack *stack, long idx)
@@ -288,12 +298,11 @@ int	main(int argc, char **argv)
 	t_swap_stack *swap;
 	char **splt;
 	int i;
-	// int fail;
 
 	swap = swap_stack_new(count_args(argc, argv));
 	if (argc == 1 || !swap)
 		return (0);
-	// fail = 0;
+	*get_swap_stacks() = swap;
 	while (--argc > 0)
 	{
 		splt = ft_split(*(++argv));
@@ -301,11 +310,9 @@ int	main(int argc, char **argv)
 		while (splt[i])
 			stack_push(&swap->a, ft_atoi(splt[i++]));
 		free(splt);
-		// if (fail)
-		// 	return (swap_stack_free(swap), 0);
 	}
 	print_stack(&swap->a);
 	print_stack(&swap->b);
-	swap_stack_free(swap);
+	swap_stack_free();
 	return (0);
 }

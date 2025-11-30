@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:53:27 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/30 16:01:37 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/11/30 16:36:48 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef struct s_swap_stack
 typedef void			(*t_operation)(t_swap_stack *swap);
 
 t_swap_stack			*swap_stack_new(long num_size);
-void					swap_stack_free(t_swap_stack *swap);
+t_swap_stack			**get_swap_stacks(void);
+void					swap_stack_free(void);
 
 int						*stack_get(t_circular_stack *stack, long idx);
 void					stack_push(t_circular_stack *stack, int val);
