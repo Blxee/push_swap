@@ -1,37 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   rotate_operations.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/01 11:21:21 by atahiri-         ###   ########.fr       */
+/*   Created: 2025/12/01 11:02:36 by atahiri-          #+#    #+#             */
+/*   Updated: 2025/12/01 11:02:43 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-#include <stdio.h>
-void	print_stack(t_circular_stack *stack)
+void	ra(t_swap_stack *swap)
 {
-	printf("\nstack\n");
-	for (long i = 0; i < stack->len; i++)
-		printf("%d\n", *stack_get(stack, i));
+	t_circular_stack	*a;
+
+	ft_putstr("ra\n");
+	a = &swap->a;
+	a->start--;
+	if (a->start < 0)
+		a->start = a->len - 1;
 }
 
-int	main(int argc, char **argv)
+void	rb(t_swap_stack *swap)
 {
-	t_swap_stack	*swap;
+	t_circular_stack	*b;
 
-	if (argc <= 1)
-		return (0);
-	swap = swap_stack_new(count_args(argc, argv));
-	if (!swap)
-		return (0);
-	parse_args(swap, argc, argv);
-	print_stack(&swap->a);
-	print_stack(&swap->b);
-	swap_stack_free(&swap);
-	return (0);
+	ft_putstr("rb\n");
+	b = &swap->b;
+	b->start--;
+	if (b->start < 0)
+		b->start = b->len - 1;
+}
+
+void	rr(t_swap_stack *swap)
+{
+	ra(swap);
+	rb(swap);
 }

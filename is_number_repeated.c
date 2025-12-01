@@ -1,37 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   is_number_repeated.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/01 11:21:21 by atahiri-         ###   ########.fr       */
+/*   Created: 2025/12/01 11:03:18 by atahiri-          #+#    #+#             */
+/*   Updated: 2025/12/01 11:16:17 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-#include <stdio.h>
-void	print_stack(t_circular_stack *stack)
+int	is_number_repeated(t_circular_stack *stack)
 {
-	printf("\nstack\n");
-	for (long i = 0; i < stack->len; i++)
-		printf("%d\n", *stack_get(stack, i));
-}
+	int		num;
+	long	i;
 
-int	main(int argc, char **argv)
-{
-	t_swap_stack	*swap;
-
-	if (argc <= 1)
+	if (stack->len <= 0)
 		return (0);
-	swap = swap_stack_new(count_args(argc, argv));
-	if (!swap)
-		return (0);
-	parse_args(swap, argc, argv);
-	print_stack(&swap->a);
-	print_stack(&swap->b);
-	swap_stack_free(&swap);
+	num = *stack_get(stack, 0);
+	i = 1;
+	while (i < stack->len)
+	{
+		if (num == *stack_get(stack, i))
+			return (1);
+		i++;
+	}
 	return (0);
 }

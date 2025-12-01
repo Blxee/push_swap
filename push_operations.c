@@ -1,37 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   push_operations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/01 11:21:21 by atahiri-         ###   ########.fr       */
+/*   Created: 2025/12/01 11:03:01 by atahiri-          #+#    #+#             */
+/*   Updated: 2025/12/01 11:03:06 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-#include <stdio.h>
-void	print_stack(t_circular_stack *stack)
+void	pa(t_swap_stack *swap)
 {
-	printf("\nstack\n");
-	for (long i = 0; i < stack->len; i++)
-		printf("%d\n", *stack_get(stack, i));
+	t_circular_stack	*a;
+	t_circular_stack	*b;
+
+	ft_putstr("pa\n");
+	a = &swap->a;
+	b = &swap->b;
+	stack_push_back(a, stack_pop(b));
 }
 
-int	main(int argc, char **argv)
+void	pb(t_swap_stack *swap)
 {
-	t_swap_stack	*swap;
+	t_circular_stack	*a;
+	t_circular_stack	*b;
 
-	if (argc <= 1)
-		return (0);
-	swap = swap_stack_new(count_args(argc, argv));
-	if (!swap)
-		return (0);
-	parse_args(swap, argc, argv);
-	print_stack(&swap->a);
-	print_stack(&swap->b);
-	swap_stack_free(&swap);
-	return (0);
+	ft_putstr("pb\n");
+	a = &swap->a;
+	b = &swap->b;
+	stack_push_back(b, stack_pop(a));
 }

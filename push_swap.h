@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:53:27 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/01 10:10:08 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:14:52 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void					stack_push_front(t_circular_stack *stack, int val);
 int						stack_pop(t_circular_stack *stack);
 
 // parsing utils
+long					count_args(int argc, char **argv);
 void					parse_args(t_swap_stack *swap, int argc, char **arpv);
 int						ft_isspace(int c);
 char					**ft_split(char const *s);

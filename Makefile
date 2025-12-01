@@ -4,14 +4,25 @@ CFLAGS = -Wall -Werror -Wextra                   -g
 
 NAME = push_swap
 
-SRCS = push_swap.c ft_atoi.c ft_split.c ft_isspace.c
+PUSH_SWAP_SRCS = count_args.c ft_atoi.c ft_isspace.c ft_putstr.c \
+	   ft_split.c is_number_repeated.c parse_args.c \
+	   push_operations.c push_swap.c reverse_rotate_operations.c \
+	   rotate_operations.c stack_utils.c swap_operations.c swap_stack_utils.c
 
-OBJS = $(SRCS:.c=.o)
+PUSH_SWAP_OBJS = $(PUSH_SWAP_SRCS:.c=.o)
 
-$(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(OBJS) -o $@
+BONUS_NAME = checker
+CHECKER_SRCS =
 
-bonus: checker
+CHECKER_OBJS = $(CHECKER_SRCS:.c=.o)
+
+$(NAME): $(PUSH_SWAP_OBJS)
+	$(CC) $(PUSH_SWAP_OBJS) -o $@
+
+bonus: $(BONUS_NAME)
+
+$(BONUS_NAME): $(CHECKER_OBJS)
+	$(CC) $(CHECKER_OBJS) -o $@
 
 %.o: %.c push_swap.h
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -19,10 +30,10 @@ bonus: checker
 all: $(NAME)
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(PUSH_SWAP_OBJS) $(CHECKER_OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(BONUS_NAME)
 
 re: fclean all
 
