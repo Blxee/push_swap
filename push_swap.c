@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/11/30 18:10:45 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/01 09:11:13 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int   *stack_get(t_circular_stack *stack, long idx)
 	return (&stack->buf[idx]);
 }
 
-void  stack_push(t_circular_stack *stack, int val)
+void  stack_push_back(t_circular_stack *stack, int val)
 {
 	long i;
 
@@ -79,6 +79,22 @@ void  stack_push(t_circular_stack *stack, int val)
 	}
 	(stack->len)++;
 	stack->buf[stack->start++] = val;
+}
+
+void					stack_push_front(t_circular_stack *stack, int val)
+{
+	long i;
+
+	if (!stack)
+		return ;
+	i = stack->len;
+	while (i > stack->start)
+	{
+		stack->buf[i] = stack->buf[i - 1];
+		i--;
+	}
+	(stack->len)++;
+	stack->buf[stack->start] = val;
 }
 
 int   stack_pop(t_circular_stack *stack)
@@ -157,7 +173,7 @@ void	pa(t_swap_stack *swap)
 	ft_putstr("pa\n");
 	a = &swap->a;
 	b = &swap->b;
-	stack_push(a, stack_pop(b));
+	stack_push_back(a, stack_pop(b));
 }
 
 void	pb(t_swap_stack *swap)
@@ -168,7 +184,7 @@ void	pb(t_swap_stack *swap)
 	ft_putstr("pb\n");
 	a = &swap->a;
 	b = &swap->b;
-	stack_push(b, stack_pop(a));
+	stack_push_back(b, stack_pop(a));
 }
 
 void	ra(t_swap_stack *swap)
@@ -272,6 +288,8 @@ int						is_number_repeated(t_circular_stack *stack)
 	long	i;
 
 	// WARN: make sure to change this according to the stack fill order
+	if (stack->len <= 0)
+		return (0);
 	num = *stack_get(stack, -1);
 	i = 0;
 	while (i < stack->len - 1)
@@ -299,13 +317,13 @@ int	main(int argc, char **argv)
 		splt = ft_split(*(++argv));
 		i = 0;
 		while (splt[i])
-			stack_push(&swap->a, ft_atoi(splt[i++], &fail));
+			stack_push_front(&swap->a, ft_atoi(splt[i++], &fail));
 		i = 0;
 		while (splt[i])
 			free(splt[i++]);
 		free(splt);
 		if (fail || is_number_repeated(&swap->a))
-			return (ft_putstr("Error\n"), swap_stack_free(&swap), 0);
+			return (ft_putstr("Error\n"), swap_stack_free(&swap), 255);
 	}
 	print_stack(&swap->a);
 	print_stack(&swap->b);
