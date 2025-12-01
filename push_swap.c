@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/01 09:11:13 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/01 10:50:33 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,16 +301,12 @@ int						is_number_repeated(t_circular_stack *stack)
 	return (0);
 }
 
-int	main(int argc, char **argv)
+void	parse_args(t_swap_stack *swap, int argc, char **argv)
 {
-	t_swap_stack *swap;
 	char **splt;
 	int i;
 	int fail;
 
-	swap = swap_stack_new(count_args(argc, argv));
-	if (argc == 1 || !swap)
-		return (0);
 	fail = 0;
 	while (--argc > 0)
 	{
@@ -322,9 +318,25 @@ int	main(int argc, char **argv)
 		while (splt[i])
 			free(splt[i++]);
 		free(splt);
-		if (fail || is_number_repeated(&swap->a))
-			return (ft_putstr("Error\n"), swap_stack_free(&swap), 255);
+		if (i == 0 || fail || is_number_repeated(&swap->a))
+		{
+			ft_putstr("Error\n");
+			swap_stack_free(&swap);
+			exit(255);
+		}
 	}
+}
+
+int	main(int argc, char **argv)
+{
+	t_swap_stack *swap;
+
+	if (argc <= 1)
+		return (0);
+	swap = swap_stack_new(count_args(argc, argv));
+	if (!swap)
+		return (0);
+	parse_args(swap, argc, argv);
 	print_stack(&swap->a);
 	print_stack(&swap->b);
 	swap_stack_free(&swap);
