@@ -4,15 +4,19 @@ CFLAGS = -Wall -Werror -Wextra                   -g
 
 NAME = push_swap
 
-PUSH_SWAP_SRCS = count_args.c ft_atoi.c ft_isspace.c ft_putstr.c \
-	   ft_split.c is_number_repeated.c parse_args.c \
-	   push_operations.c push_swap.c reverse_rotate_operations.c \
-	   rotate_operations.c stack_utils.c swap_operations.c swap_stack_utils.c
+PUSH_SWAP_SRCS = push_swap.c ft_atoi.c ft_isspace.c ft_putstr_fd.c \
+				 ft_split.c is_number_repeated.c parse_args.c \
+				 push_operations.c count_args.c reverse_rotate_operations.c \
+				 rotate_operations.c stack_utils.c swap_operations.c swap_stack_utils.c
 
 PUSH_SWAP_OBJS = $(PUSH_SWAP_SRCS:.c=.o)
 
 BONUS_NAME = checker
-CHECKER_SRCS =
+
+CHECKER_SRCS = checker.c  push_operations.c reverse_rotate_operations.c \
+			   rotate_operations.c swap_operations.c stack_utils.c \
+			   swap_stack_utils.c ft_putstr_fd.c count_args.c parse_args.c \
+			   ft_isspace.c is_number_repeated.c ft_split.c ft_atoi.c
 
 CHECKER_OBJS = $(CHECKER_SRCS:.c=.o)
 

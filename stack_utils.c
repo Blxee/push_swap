@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 11:02:20 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/01 11:02:29 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/01 13:31:26 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,20 @@ int	stack_pop(t_circular_stack *stack)
 	if (stack->start < 0)
 		stack->start = stack->len - 1;
 	return (val);
+}
+
+int	stack_sorted(t_circular_stack *stack)
+{
+	long	i;
+
+	if (!stack || stack->len <= 0)
+		return (0);
+	i = 0;
+	while (i < stack->len - 1)
+	{
+		if (*stack_get(stack, i) > *stack_get(stack, i + 1))
+			return (0);
+		i++;
+	}
+	return (1);
 }

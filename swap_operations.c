@@ -6,18 +6,19 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 11:04:34 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/01 11:31:37 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/01 14:27:39 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sa(t_swap_stack *swap)
+void	sa(t_swap_stack *swap, int show)
 {
 	t_circular_stack	*stack;
 	int					tmp;
 
-	ft_putstr("sa\n");
+	if (show)
+		ft_putstr_fd(1, "sa\n");
 	stack = &swap->a;
 	if (stack->len < 2)
 		return ;
@@ -26,12 +27,13 @@ void	sa(t_swap_stack *swap)
 	*stack_get(stack, -2) = tmp;
 }
 
-void	sb(t_swap_stack *swap)
+void	sb(t_swap_stack *swap, int show)
 {
 	t_circular_stack	*stack;
 	int					tmp;
 
-	ft_putstr("sb\n");
+	if (show)
+		ft_putstr_fd(1, "sb\n");
 	stack = &swap->b;
 	if (stack->len < 2)
 		return ;
@@ -40,8 +42,8 @@ void	sb(t_swap_stack *swap)
 	*stack_get(stack, -2) = tmp;
 }
 
-void	ss(t_swap_stack *swap)
+void	ss(t_swap_stack *swap, int show)
 {
-	sa(swap);
-	sb(swap);
+	sa(swap, show);
+	sb(swap, show);
 }
