@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 11:02:20 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/02 11:52:57 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/02 17:23:30 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,10 @@
 
 int	*stack_get(t_circular_stack *stack, long idx)
 {
-	long	len;
-	long	offset;
-
-	len = stack->len;
-	offset = stack->start;
-	idx += offset;
+	idx += stack->start;
 	while (idx < 0)
-		idx += len;
-	idx %= len;
+		idx += stack->len;
+	idx %= stack->len;
 	return (&stack->buf[idx]);
 }
 
