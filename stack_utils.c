@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 11:02:20 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/01 13:31:26 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/02 11:52:57 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	stack_sorted(t_circular_stack *stack)
 	i = 0;
 	while (i < stack->len - 1)
 	{
-		if (*stack_get(stack, i) > *stack_get(stack, i + 1))
+		if (*stack_get(stack, i) < *stack_get(stack, i + 1))
 			return (0);
 		i++;
 	}
