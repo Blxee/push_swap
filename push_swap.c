@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/02 17:34:00 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:34:56 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_stack(t_circular_stack *stack)
 {
 	printf("\nstack\n");
 	for (long i = 0; i < stack->len; i++)
-		printf("%d\n", *stack_get(stack, i));
+		printf("%d\n", stack_get(stack, i)->val);
 }
 
 void	sort_3(t_swap_stack *swap)
@@ -30,15 +30,15 @@ void	sort_3(t_swap_stack *swap)
 
 	while (++i < 3)
 	{
-		if (i == 0 || *stack_get(&swap->a, i) <= min)
+		if (i == 0 || stack_get(&swap->a, i)->val <= min)
 		{
 			min_idx = i;
-			min = *stack_get(&swap->a, i);
+			min = stack_get(&swap->a, i)->val;
 		}
-		if (i == 0 || *stack_get(&swap->a, i) >= max)
+		if (i == 0 || stack_get(&swap->a, i)->val >= max)
 		{
 			max_idx = i;
-			max = *stack_get(&swap->a, i);
+			max = stack_get(&swap->a, i)->val;
 		}
 	}
 	if ((max_idx + 1) % 3 == min_idx)

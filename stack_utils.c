@@ -6,13 +6,13 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 11:02:20 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/02 17:23:30 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:39:15 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	*stack_get(t_circular_stack *stack, long idx)
+t_node	*stack_get(t_circular_stack *stack, long idx)
 {
 	idx += stack->start;
 	while (idx < 0)
@@ -21,7 +21,7 @@ int	*stack_get(t_circular_stack *stack, long idx)
 	return (&stack->buf[idx]);
 }
 
-void	stack_push_back(t_circular_stack *stack, int val)
+void	stack_push_back(t_circular_stack *stack, t_node val)
 {
 	long	i;
 
@@ -37,7 +37,7 @@ void	stack_push_back(t_circular_stack *stack, int val)
 	stack->buf[stack->start++] = val;
 }
 
-void	stack_push_front(t_circular_stack *stack, int val)
+void	stack_push_front(t_circular_stack *stack, t_node val)
 {
 	long	i;
 
@@ -53,13 +53,13 @@ void	stack_push_front(t_circular_stack *stack, int val)
 	stack->buf[stack->start] = val;
 }
 
-int	stack_pop(t_circular_stack *stack)
+t_node	stack_pop(t_circular_stack *stack)
 {
 	long	i;
-	int		val;
+	t_node	val;
 
 	if (!stack || stack->len == 0)
-		return (0);
+		return ((t_node){});
 	val = *stack_get(stack, -1);
 	i = 0;
 	while (i < stack->len - stack->start)
@@ -86,7 +86,7 @@ int	stack_sorted(t_circular_stack *stack)
 	i = 0;
 	while (i < stack->len - 1)
 	{
-		if (*stack_get(stack, i) < *stack_get(stack, i + 1))
+		if (stack_get(stack, i)->val < stack_get(stack, i + 1)->val)
 			return (0);
 		i++;
 	}

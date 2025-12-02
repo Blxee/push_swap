@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 11:03:10 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/02 11:53:30 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:40:24 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	parse_args(t_swap_stack *swap, int argc, char **argv)
 		splt = ft_split(*(++argv));
 		i = 0;
 		while (splt[i])
-			stack_push_front(&swap->a, ft_atoi(splt[i++], &fail));
+			stack_push_front(&swap->a, (t_node){
+				.val = ft_atoi(splt[i++], &fail)
+			});
 		i = 0;
 		while (splt[i])
 			free(splt[i++]);

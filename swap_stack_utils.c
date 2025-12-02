@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 11:01:05 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/01 11:01:42 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:42:17 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_swap_stack	*swap_stack_new(long num_size)
 	swap->a.len = 0;
 	swap->a.start = 0;
 	swap->a = (t_circular_stack){
-		.buf = malloc(sizeof(int) * (size_t)num_size),
+		.buf = malloc(sizeof(t_node) * (size_t)num_size),
 		.capacity = num_size,
 		.len = 0,
 		.start = 0,
@@ -30,7 +30,7 @@ t_swap_stack	*swap_stack_new(long num_size)
 	if (!swap->a.buf)
 		return (free(swap), NULL);
 	swap->b = (t_circular_stack){
-		.buf = malloc(sizeof(int) * (size_t)num_size),
+		.buf = malloc(sizeof(t_node) * (size_t)num_size),
 		.capacity = num_size,
 		.len = 0,
 		.start = 0,

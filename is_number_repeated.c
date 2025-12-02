@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 11:03:18 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/01 11:16:17 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:35:23 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	is_number_repeated(t_circular_stack *stack)
 
 	if (stack->len <= 0)
 		return (0);
-	num = *stack_get(stack, 0);
+	num = stack_get(stack, 0)->val;
 	i = 1;
 	while (i < stack->len)
 	{
-		if (num == *stack_get(stack, i))
+		if (num == stack_get(stack, i)->val)
 			return (1);
 		i++;
 	}

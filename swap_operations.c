@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 11:04:34 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/01 14:27:39 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/02 18:37:34 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	sa(t_swap_stack *swap, int show)
 {
 	t_circular_stack	*stack;
-	int					tmp;
+	t_node				tmp;
 
 	if (show)
 		ft_putstr_fd(1, "sa\n");
@@ -30,7 +30,7 @@ void	sa(t_swap_stack *swap, int show)
 void	sb(t_swap_stack *swap, int show)
 {
 	t_circular_stack	*stack;
-	int					tmp;
+	t_node				tmp;
 
 	if (show)
 		ft_putstr_fd(1, "sb\n");
