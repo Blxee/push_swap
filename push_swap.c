@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/02 17:30:46 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/02 17:34:00 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,20 @@ void	print_stack(t_circular_stack *stack)
 
 void	sort_3(t_swap_stack *swap)
 {
-	int	min;
-	int	max;
-	int	min_idx;
-	int	max_idx;
-	int	i;
+	static int	i = -1;
+	int			min;
+	int			max;
+	int			min_idx;
+	int			max_idx;
 
-	min = INT_MAX;
-	max = INT_MIN;
-	i = -1;
 	while (++i < 3)
 	{
-		if (*stack_get(&swap->a, i) <= min)
+		if (i == 0 || *stack_get(&swap->a, i) <= min)
 		{
 			min_idx = i;
 			min = *stack_get(&swap->a, i);
 		}
-		if (*stack_get(&swap->a, i) >= max)
+		if (i == 0 || *stack_get(&swap->a, i) >= max)
 		{
 			max_idx = i;
 			max = *stack_get(&swap->a, i);
