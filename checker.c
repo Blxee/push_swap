@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <stddef.h>
 
 static int	ft_strncmp(const char *s1, const char *s2, int n)
 {
@@ -30,7 +31,7 @@ static int	ft_strncmp(const char *s1, const char *s2, int n)
 	return (0);
 }
 
-static int	apply_oprations(void)
+static int	apply_oprations(t_swap_stack *swap)
 {
 	static char				*keys[] = {
 		"sa", "sb", "ss", "pa", "pb", "ra", "rb", "rr", "rra", "rrb", "rrr",
@@ -40,18 +41,33 @@ static int	apply_oprations(void)
 	};
 	char					buf[3];
 	int						len;
+	size_t				i;
+	int error;
 
-	(void)keys;
-	(void)vals;
+	error = 0;
 	len = 0;
 	while (1)
 	{
 		if (read(0, buf + len++, 1) <= 0)
 			break ;
 		if (len == 3)
-			;
+		{
+			i = 0;
+			while (i < sizeof(keys) / sizeof(*keys))
+			{
+				if (keys[i][2] == '\0')
+				{
+					 if (buf[0] == keys[i][0] && buf[1] == keys[i][1] && buf[2] == '\n')
+						vals[i](swap, 0);
+				} else if (buf[0] == keys[i][0] && buf[1] == keys[i][1] && buf[2] == keys[i][2])
+				{
+					 vals[i](swap, 0);
+				}
+				
+			}
+		}
 	}
-	return (1);
+	return (error);
 }
 
 int	main(int argc, char **argv)
@@ -64,7 +80,7 @@ int	main(int argc, char **argv)
 	if (!swap)
 		return (0);
 	parse_args(swap, argc, argv);
-	if (apply_oprations())
+	if (apply_oprations(swap))
 		return (swap_stack_free(&swap), 255);
 	if (stack_sorted(&swap->a) && swap->b.len == 0)
 		ft_putstr_fd(1, "OK\n");
