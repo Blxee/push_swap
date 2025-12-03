@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 08:14:34 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/03 10:31:34 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/03 12:35:40 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,36 @@ static int	total_cost(t_node *node)
 	return (total);
 }
 
+static void	find_node_cost_a(t_swap_stack *swap, t_node *node)
+{
+	long	i;
+	long	target_idx;
+	t_node	*current;
+	int		min_rank;
+
+	min_rank = INT_MAX;
+	target_idx = 0;
+	i = ~0;
+	while (++i < swap->a.len)
+	{
+		current = stack_get(&swap->a, i);
+		if (current->rank > node->rank && current->rank < min_rank)
+		{
+			target_idx = i;
+			min_rank = current->rank;
+		}
+	}
+	// if (min_rank == INT_MAX)
+	// 	while ()
+	if (target_idx >= swap->a.len / 2)
+		node->cost_a = swap->a.len - target_idx - 1;
+	else
+		node->cost_a = -target_idx - 1;
+}
+
 static t_node	*calculate_costs(t_swap_stack *swap)
 {
 	long	i;
-	long	j;
 	int		min_cost;
 	t_node	*current;
 	t_node	*min_node;
@@ -113,11 +139,7 @@ static t_node	*calculate_costs(t_swap_stack *swap)
 			current->cost_b = swap->b.len - i - 1;
 		else
 			current->cost_b = -i - 1;
-		j = ~0;
-		while (++j < swap->a.len)
-		{
-			break;
-		}
+		find_node_cost_a(swap, current);
 		if (total_cost(current) < min_cost)
 		{
 			min_cost = total_cost(current);
@@ -129,7 +151,7 @@ static t_node	*calculate_costs(t_swap_stack *swap)
 
 void	apply_turk(t_swap_stack *swap)
 {
-	t_node	*chosen;
+	t_node	*tg;
 
 	calculate_rank(swap);
 	while (swap->a.len > 3)
@@ -137,24 +159,26 @@ void	apply_turk(t_swap_stack *swap)
 	sort_3(swap);
 	while (swap->b.len > 0)
 	{
-		chosen = calculate_costs(swap);
-		while (total_cost(chosen) > 0)
+		tg = calculate_costs(swap);
+		while (total_cost(tg) > 0)
 		{
-			if (chosen->cost_a < 0 && chosen->cost_b < 0)
+			if (tg->cost_a < 0 && tg->cost_b < 0)
 				rrr(swap, 1);
-			else if (chosen->cost_a > 0 && chosen->cost_b > 0)
+			else if (tg->cost_a > 0 && tg->cost_b > 0)
 				rr(swap, 1);
 			else
 			{
-				if (chosen->cost_a < 0)
+				if (tg->cost_a < 0)
 					rra(swap, 1);
-				else if (chosen->cost_a > 0)
+				else if (tg->cost_a > 0)
 					ra(swap, 1);
-				if (chosen->cost_b < 0)
+				if (tg->cost_b < 0)
 					rrb(swap, 1);
-				else if (chosen->cost_b > 0)
+				else if (tg->cost_b > 0)
 					rb(swap, 1);
 			}
+			tg->cost_a += (tg->cost_a < 0) * 1 + (tg->cost_a > 0) * -1;
+			tg->cost_b += (tg->cost_b < 0) * 1 + (tg->cost_b > 0) * -1;
 		}
 		pa(swap, 1);
 	}
