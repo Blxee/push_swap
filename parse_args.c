@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 11:03:10 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/02 18:40:24 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/03 10:35:08 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	parse_args(t_swap_stack *swap, int argc, char **argv)
 	while (--argc > 0)
 	{
 		splt = ft_split(*(++argv));
+		if (!splt)
+			return (swap_stack_free(&swap), exit(0xffffffff));
 		i = 0;
 		while (splt[i])
 			stack_push_front(&swap->a, (t_node){
@@ -33,9 +35,8 @@ void	parse_args(t_swap_stack *swap, int argc, char **argv)
 		free(splt);
 		if (i == 0 || fail || is_number_repeated(&swap->a))
 		{
-			ft_putstr_fd(2, "Error\n");
-			swap_stack_free(&swap);
-			exit(255);
+			return (ft_putstr_fd(2, "Error\n"),
+				swap_stack_free(&swap), exit(255));
 		}
 	}
 }

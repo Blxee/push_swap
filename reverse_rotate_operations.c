@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 11:02:47 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/01 14:25:59 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/03 08:08:28 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	rrb(t_swap_stack *swap, int show)
 
 void	rrr(t_swap_stack *swap, int show)
 {
-	rra(swap, show);
-	rrb(swap, show);
+	if (show)
+		ft_putstr_fd(1, "rrr\n");
+	rra(swap, 0);
+	rrb(swap, 0);
 }

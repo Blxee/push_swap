@@ -5,7 +5,7 @@ CFLAGS = -Wall -Werror -Wextra                   -g
 NAME = push_swap
 
 PUSH_SWAP_SRCS = push_swap.c ft_atoi.c ft_isspace.c ft_putstr_fd.c \
-				 ft_split.c is_number_repeated.c parse_args.c \
+				 ft_split.c is_number_repeated.c parse_args.c turk_utils.c \
 				 push_operations.c count_args.c reverse_rotate_operations.c \
 				 rotate_operations.c stack_utils.c swap_operations.c swap_stack_utils.c
 
