@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 08:14:34 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/04 18:13:48 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/04 18:32:55 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,30 @@ static t_node	*calculate_costs(t_swap_stack *swap)
 	return (min_node);
 }
 
+static void	prepare_rotate(t_swap_stack *swap, t_node *tg)
+{
+	while (total_cost(tg) > 0)
+	{
+		if (tg->cost_a < 0 && tg->cost_b < 0)
+			rrr(swap, 1);
+		else if (tg->cost_a > 0 && tg->cost_b > 0)
+			rr(swap, 1);
+		else
+		{
+			if (tg->cost_a < 0)
+				rra(swap, 1);
+			else if (tg->cost_a > 0)
+				ra(swap, 1);
+			if (tg->cost_b < 0)
+				rrb(swap, 1);
+			else if (tg->cost_b > 0)
+				rb(swap, 1);
+		}
+		tg->cost_a += (tg->cost_a < 0) * 1 + (tg->cost_a > 0) * -1;
+		tg->cost_b += (tg->cost_b < 0) * 1 + (tg->cost_b > 0) * -1;
+	}
+}
+
 void	apply_turk(t_swap_stack *swap)
 {
 	t_node	*tg;
@@ -171,26 +195,17 @@ void	apply_turk(t_swap_stack *swap)
 	while (swap->b.len > 0)
 	{
 		tg = calculate_costs(swap);
-		while (total_cost(tg) > 0)
-		{
-			if (tg->cost_a < 0 && tg->cost_b < 0)
-				rrr(swap, 1);
-			else if (tg->cost_a > 0 && tg->cost_b > 0)
-				rr(swap, 1);
-			else
-			{
-				if (tg->cost_a < 0)
-					rra(swap, 1);
-				else if (tg->cost_a > 0)
-					ra(swap, 1);
-				if (tg->cost_b < 0)
-					rrb(swap, 1);
-				else if (tg->cost_b > 0)
-					rb(swap, 1);
-			}
-			tg->cost_a += (tg->cost_a < 0) * 1 + (tg->cost_a > 0) * -1;
-			tg->cost_b += (tg->cost_b < 0) * 1 + (tg->cost_b > 0) * -1;
-		}
+		prepare_rotate(swap, tg);
 		pa(swap, 1);
+	}
+	while (1)
+	{
+		tg = stack_get(&swap->a, -1);
+		if (tg->rank == 0)
+			break ;
+		if (tg->rank > swap->a.len / 2)
+			ra(swap, 1);
+		else
+			rra(swap, 1);
 	}
 }
