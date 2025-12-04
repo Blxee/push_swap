@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 08:14:34 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/04 10:34:41 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/04 18:13:48 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,23 +171,22 @@ void	apply_turk(t_swap_stack *swap)
 	while (swap->b.len > 0)
 	{
 		tg = calculate_costs(swap);
-		break;
 		while (total_cost(tg) > 0)
 		{
 			if (tg->cost_a < 0 && tg->cost_b < 0)
-				rr(swap, 1);
-			else if (tg->cost_a > 0 && tg->cost_b > 0)
 				rrr(swap, 1);
+			else if (tg->cost_a > 0 && tg->cost_b > 0)
+				rr(swap, 1);
 			else
 			{
 				if (tg->cost_a < 0)
-					ra(swap, 1);
-				else if (tg->cost_a > 0)
 					rra(swap, 1);
+				else if (tg->cost_a > 0)
+					ra(swap, 1);
 				if (tg->cost_b < 0)
-					rb(swap, 1);
-				else if (tg->cost_b > 0)
 					rrb(swap, 1);
+				else if (tg->cost_b > 0)
+					rb(swap, 1);
 			}
 			tg->cost_a += (tg->cost_a < 0) * 1 + (tg->cost_a > 0) * -1;
 			tg->cost_b += (tg->cost_b < 0) * 1 + (tg->cost_b > 0) * -1;

@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 11:02:20 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/02 18:39:15 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/04 18:12:38 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	stack_push_back(t_circular_stack *stack, t_node val)
 		i--;
 	}
 	(stack->len)++;
-	stack->buf[stack->start++] = val;
+	stack->buf[stack->start] = val;
+	stack->start++;
+	if (stack->start >= stack->len)
+		stack->start = 0;
 }
 
 void	stack_push_front(t_circular_stack *stack, t_node val)
