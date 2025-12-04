@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 08:14:34 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/03 12:35:40 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:34:41 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ static void	calculate_rank(t_swap_stack *swap)
 	t_node	**nodes;
 	long	i;
 
-	nodes = malloc(sizeof(t_node *) * swap->b.len);
+	nodes = malloc(sizeof(t_node *) * swap->a.len);
 	if (!nodes)
-		return (swap_stack_free(&swap), exit(0xffffffff));
+		return (swap_stack_free(&swap), exit(-1));
 	i = ~0;
-	while (++i < swap->b.len)
-		nodes[i] = stack_get(&swap->b, i);
-	bubble_sort(nodes, swap->b.len);
+	while (++i < swap->a.len)
+		nodes[i] = stack_get(&swap->a, i);
+	bubble_sort(nodes, swap->a.len);
 	free(nodes);
 }
 
@@ -115,8 +115,19 @@ static void	find_node_cost_a(t_swap_stack *swap, t_node *node)
 			min_rank = current->rank;
 		}
 	}
-	// if (min_rank == INT_MAX)
-	// 	while ()
+	if (min_rank == INT_MAX)
+	{
+		i = ~0;
+		while (++i < swap->a.len)
+		{
+			current = stack_get(&swap->a, i);
+			if (current->rank < min_rank)
+			{
+				target_idx = i;
+				min_rank = current->rank;
+			}
+		}
+	}
 	if (target_idx >= swap->a.len / 2)
 		node->cost_a = swap->a.len - target_idx - 1;
 	else
@@ -160,22 +171,23 @@ void	apply_turk(t_swap_stack *swap)
 	while (swap->b.len > 0)
 	{
 		tg = calculate_costs(swap);
+		break;
 		while (total_cost(tg) > 0)
 		{
 			if (tg->cost_a < 0 && tg->cost_b < 0)
-				rrr(swap, 1);
-			else if (tg->cost_a > 0 && tg->cost_b > 0)
 				rr(swap, 1);
+			else if (tg->cost_a > 0 && tg->cost_b > 0)
+				rrr(swap, 1);
 			else
 			{
 				if (tg->cost_a < 0)
-					rra(swap, 1);
-				else if (tg->cost_a > 0)
 					ra(swap, 1);
+				else if (tg->cost_a > 0)
+					rra(swap, 1);
 				if (tg->cost_b < 0)
-					rrb(swap, 1);
-				else if (tg->cost_b > 0)
 					rb(swap, 1);
+				else if (tg->cost_b > 0)
+					rrb(swap, 1);
 			}
 			tg->cost_a += (tg->cost_a < 0) * 1 + (tg->cost_a > 0) * -1;
 			tg->cost_b += (tg->cost_b < 0) * 1 + (tg->cost_b > 0) * -1;

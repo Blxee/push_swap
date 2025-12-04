@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/03 09:39:27 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:18:50 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include <stdio.h>
 void	print_stack(t_circular_stack *stack)
 {
-	printf("\nstack\n");
+	printf("\nstack: %ld\n", stack->len);
 	for (long i = 0; i < stack->len; i++)
-		printf("%4d\n", stack_get(stack, i)->val);
+		printf("%4d=> r: %4d, b: %4d, a: %4d\n", stack_get(stack, i)->val, stack_get(stack, i)->rank, stack_get(stack, i)->cost_b, stack_get(stack, i)->cost_a);
 }
 
 int	main(int argc, char **argv)
