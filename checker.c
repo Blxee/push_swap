@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 11:34:31 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/02 15:12:18 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/05 09:08:09 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 static int	apply_oprations(t_swap_stack *swap)
 {
-	static t_operation	arr[][127][127] = {
+	const static t_operation	arr[][127][127] = {
 	['s'] = {['a'] = {['\n'] = sa}, ['b'] = {['\n'] = sb},
 	['s'] = {['\n'] = ss}},
 	['p'] = {['a'] = {['\n'] = pa}, ['b'] = {['\n'] = pb}},
 	['r'] = {['a'] = {['\n'] = ra}, ['b'] = {['\n'] = rb},
 	['r'] = {['a'] = rra, ['b'] = rrb, ['r'] = rrr}}};
-	char				*buf;
-	t_operation			op;
+	char						*buf;
+	t_operation					op;
 
 	while (1)
 	{
