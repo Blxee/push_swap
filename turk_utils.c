@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 08:14:34 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/06 18:46:08 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/07 10:41:38 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ static void	bubble_sort(t_node **nodes, long len)
 				nodes[j] = nodes[j + 1];
 				nodes[j + 1] = tmp;
 			}
-			nodes[j]->rank = j;
-			nodes[j + 1]->rank = j + 1;
 		}
 	}
+	i = ~0;
+	while (++i < len)
+		nodes[i]->rank = i;
 }
 
 static void	calculate_rank(t_swap_stack *swap)
@@ -196,7 +197,7 @@ void	leave_lis(t_swap_stack *swap)
 	top_len = 0;
 	while (++i < swap->a.len)
 	{
-		if (i == 0 || stack_get(&swap->a, i - 1)->val < stack_get(&swap->a, i)->val)
+		if (i == 0 || stack_get(&swap->a, i - 1)->rank < stack_get(&swap->a, i)->rank)
 		{
 			idx = i;
 			len = 0;
@@ -223,11 +224,11 @@ void	apply_turk(t_swap_stack *swap)
 	t_node	*tg;
 
 	calculate_rank(swap);
-	while (swap->a.len > 3)
-		pb(swap, 1);
 	// print_stack(&swap->a);
 	// print_stack(&swap->b);
-	// leave_lis(swap);
+	leave_lis(swap);
+	// if (swap->a.len == 3)
+	// 	sort_3(swap);
 	// print_stack(&swap->a);
 	// print_stack(&swap->b);
 	while (swap->b.len > 0)
