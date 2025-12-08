@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 08:14:34 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/06 18:46:08 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/06 12:09:14 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,8 +207,8 @@ void	leave_lis(t_swap_stack *swap)
 			top_len = len;
 		}
 	}
-	while (swap->a.len > 3 && swap->a.len > top_idx + top_len)
-		pb(swap, 1);
+	while (swap->a.len > 3 &&  top_idx + top_len++ < swap->a.len)
+		pb(swap, 0);
 	while (swap->a.len > 3 && top_idx-- > 0)
 		rra(swap, 1), pb(swap, 1);
 	if (swap->a.len == 3)
@@ -223,13 +223,12 @@ void	apply_turk(t_swap_stack *swap)
 	t_node	*tg;
 
 	calculate_rank(swap);
-	while (swap->a.len > 3)
-		pb(swap, 1);
-	// print_stack(&swap->a);
-	// print_stack(&swap->b);
-	// leave_lis(swap);
-	// print_stack(&swap->a);
-	// print_stack(&swap->b);
+	print_stack(&swap->a);
+	print_stack(&swap->b);
+	leave_lis(swap);
+	print_stack(&swap->a);
+	print_stack(&swap->b);
+	return ;
 	while (swap->b.len > 0)
 	{
 		tg = calculate_costs(swap);
