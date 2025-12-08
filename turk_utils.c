@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 08:14:34 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/06 12:09:14 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/04 18:32:55 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,58 +184,20 @@ static void	prepare_rotate(t_swap_stack *swap, t_node *tg)
 	}
 }
 
-void	leave_lis(t_swap_stack *swap)
-{
-	long	idx;
-	long	len;
-	long	top_idx;
-	long	top_len;
-	long	i;
-
-	i = ~0;
-	top_len = 0;
-	while (++i < swap->a.len)
-	{
-		if (i == 0 || stack_get(&swap->a, i - 1)->val < stack_get(&swap->a, i)->val)
-		{
-			idx = i;
-			len = 0;
-		}
-		if (++len > top_len)
-		{
-			top_idx = idx;
-			top_len = len;
-		}
-	}
-	while (swap->a.len > 3 &&  top_idx + top_len++ < swap->a.len)
-		pb(swap, 0);
-	while (swap->a.len > 3 && top_idx-- > 0)
-		rra(swap, 1), pb(swap, 1);
-	if (swap->a.len == 3)
-		sort_3(swap);
-}
-
-#include <stdio.h>
-void	print_stack(t_circular_stack *stack);
-
 void	apply_turk(t_swap_stack *swap)
 {
 	t_node	*tg;
 
 	calculate_rank(swap);
-	print_stack(&swap->a);
-	print_stack(&swap->b);
-	leave_lis(swap);
-	print_stack(&swap->a);
-	print_stack(&swap->b);
-	return ;
+	while (swap->a.len > 3)
+		pb(swap, 1);
+	sort_3(swap);
 	while (swap->b.len > 0)
 	{
 		tg = calculate_costs(swap);
 		prepare_rotate(swap, tg);
 		pa(swap, 1);
 	}
-	// return ;
 	while (1)
 	{
 		tg = stack_get(&swap->a, -1);
