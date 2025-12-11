@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:53:27 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/03 09:40:28 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/10 12:15:56 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_cicular_stack
 
 typedef struct s_swap_stack
 {
+	t_node				**ranked;
 	t_circular_stack	a;
 	t_circular_stack	b;
 }						t_swap_stack;

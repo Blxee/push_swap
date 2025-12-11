@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 08:14:34 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/04 18:32:55 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/11 11:53:56 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,15 @@ static void	bubble_sort(t_node **nodes, long len)
 
 static void	calculate_rank(t_swap_stack *swap)
 {
-	t_node	**nodes;
 	long	i;
 
-	nodes = malloc(sizeof(t_node *) * swap->a.len);
-	if (!nodes)
+	swap->ranked = malloc(sizeof(t_node *) * swap->a.len);
+	if (!swap->ranked)
 		return (swap_stack_free(&swap), exit(-1));
 	i = ~0;
 	while (++i < swap->a.len)
-		nodes[i] = stack_get(&swap->a, i);
-	bubble_sort(nodes, swap->a.len);
-	free(nodes);
+		swap->ranked[i] = stack_get(&swap->a, i);
+	bubble_sort(swap->ranked, swap->a.len);
 }
 
 static void	sort_3(t_swap_stack *swap)
@@ -184,13 +182,72 @@ static void	prepare_rotate(t_swap_stack *swap, t_node *tg)
 	}
 }
 
+static long	find_chunk_member(t_circular_stack *stack, int chunk_size, int chunk_idx)
+{
+	t_node	*node;
+	int		top;
+	int		bottom;
+
+	top = -1;
+	while (1)
+	{
+		if (-top > stack->len)
+			return (999999);
+		node = stack_get(stack, top);
+		if (node->rank >= (chunk_size * chunk_idx) && node->rank < (chunk_size * (chunk_idx + 1)))
+	  		break;
+	  	top--;
+	}
+	top++;
+	bottom = 0;
+	while (1)
+	{
+		if (bottom >= stack->len)
+			return (999999);
+		node = stack_get(stack, bottom);
+		if (node->rank >= (chunk_size * chunk_idx) && node->rank < (chunk_size * (chunk_idx + 1)))
+	  		break;
+	  	bottom++;
+	}
+	bottom++;
+	return ((-top >= bottom) * bottom + (-top < bottom) * top);
+}
+
+#include <stdio.h>
+void	print_stack(t_circular_stack *stack);
+static void	push_chunks(t_swap_stack *swap)
+{
+	long target;
+	int chunk_size;
+	int chunk_idx;
+
+	chunk_size = swap->a.capacity / 11 + 1;
+	chunk_idx = 0;
+	while (swap->a.len > 3)
+	{
+		target = find_chunk_member(&swap->a, chunk_size, chunk_idx);
+		while (target)
+		{
+			if (target > 0)
+				rra(swap, 1);
+			else
+				ra(swap, 1);
+			target += (target > 0) * -1 + (target < 0) * 1;
+		}
+		pb(swap, 1);
+		if (stack_get(&swap->b, -1)->rank < swap->b.len)
+			rb(swap, 1);
+		chunk_idx = swap->b.len / chunk_size;
+	}
+	exit(0);
+}
+
 void	apply_turk(t_swap_stack *swap)
 {
 	t_node	*tg;
 
 	calculate_rank(swap);
-	while (swap->a.len > 3)
-		pb(swap, 1);
+	push_chunks(swap);
 	sort_3(swap);
 	while (swap->b.len > 0)
 	{
