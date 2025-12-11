@@ -22,3 +22,9 @@ And to compile the bonus part (_checker_ program), run:
 
 ## Resources:
 
+# TODO:
+
+[ ]: reset the 42 header so it includes your username
+[ ]: delete the checker linux file
+[ ]: remove the -g flag
+[ ]: make the checker validate then apply the operation for stone heads

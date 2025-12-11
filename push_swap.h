@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:53:27 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/10 12:15:56 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/11 21:27:17 by blxee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <unistd.h>
 # include <limits.h>
 
-typedef struct s_node {
+typedef struct s_node
+{
 	int	val;
 	int	rank;
 	int	cost_a;
@@ -62,6 +63,10 @@ void					ft_putstr_fd(const int fd, const char *str);
 int						is_number_repeated(t_circular_stack *stack);
 
 void					apply_turk(t_swap_stack *swap);
+t_node					*calculate_costs(t_swap_stack *swap);
+int						total_cost(t_node *node);
+void					push_chunks(t_swap_stack *swap);
+
 // push swap operations
 void					sa(t_swap_stack *swap, int show);
 void					sb(t_swap_stack *swap, int show);

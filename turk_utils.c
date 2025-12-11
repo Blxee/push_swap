@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 08:14:34 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/11 11:53:56 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/11 21:25:00 by blxee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,86 +78,6 @@ static void	sort_3(t_swap_stack *swap)
 		ra(swap, 1);
 }
 
-static int	total_cost(t_node *node)
-{
-	int	total;
-
-	total = 0;
-	if (node->cost_a < 0)
-		total += -node->cost_a;
-	else
-		total += node->cost_a;
-	if (node->cost_b < 0)
-		total += -node->cost_b;
-	else
-		total += node->cost_b;
-	return (total);
-}
-
-static void	find_node_cost_a(t_swap_stack *swap, t_node *node)
-{
-	long	i;
-	long	target_idx;
-	t_node	*current;
-	int		min_rank;
-
-	min_rank = INT_MAX;
-	target_idx = 0;
-	i = ~0;
-	while (++i < swap->a.len)
-	{
-		current = stack_get(&swap->a, i);
-		if (current->rank > node->rank && current->rank < min_rank)
-		{
-			target_idx = i;
-			min_rank = current->rank;
-		}
-	}
-	if (min_rank == INT_MAX)
-	{
-		i = ~0;
-		while (++i < swap->a.len)
-		{
-			current = stack_get(&swap->a, i);
-			if (current->rank < min_rank)
-			{
-				target_idx = i;
-				min_rank = current->rank;
-			}
-		}
-	}
-	if (target_idx >= swap->a.len / 2)
-		node->cost_a = swap->a.len - target_idx - 1;
-	else
-		node->cost_a = -target_idx - 1;
-}
-
-static t_node	*calculate_costs(t_swap_stack *swap)
-{
-	long	i;
-	int		min_cost;
-	t_node	*current;
-	t_node	*min_node;
-
-	min_cost = INT_MAX;
-	i = ~0;
-	while (++i < swap->b.len)
-	{
-		current = stack_get(&swap->b, i);
-		if (i >= swap->b.len / 2)
-			current->cost_b = swap->b.len - i - 1;
-		else
-			current->cost_b = -i - 1;
-		find_node_cost_a(swap, current);
-		if (total_cost(current) < min_cost)
-		{
-			min_cost = total_cost(current);
-			min_node = current;
-		}
-	}
-	return (min_node);
-}
-
 static void	prepare_rotate(t_swap_stack *swap, t_node *tg)
 {
 	while (total_cost(tg) > 0)
@@ -182,70 +102,12 @@ static void	prepare_rotate(t_swap_stack *swap, t_node *tg)
 	}
 }
 
-static long	find_chunk_member(t_circular_stack *stack, int chunk_size, int chunk_idx)
-{
-	t_node	*node;
-	int		top;
-	int		bottom;
-
-	top = -1;
-	while (1)
-	{
-		if (-top > stack->len)
-			return (999999);
-		node = stack_get(stack, top);
-		if (node->rank >= (chunk_size * chunk_idx) && node->rank < (chunk_size * (chunk_idx + 1)))
-	  		break;
-	  	top--;
-	}
-	top++;
-	bottom = 0;
-	while (1)
-	{
-		if (bottom >= stack->len)
-			return (999999);
-		node = stack_get(stack, bottom);
-		if (node->rank >= (chunk_size * chunk_idx) && node->rank < (chunk_size * (chunk_idx + 1)))
-	  		break;
-	  	bottom++;
-	}
-	bottom++;
-	return ((-top >= bottom) * bottom + (-top < bottom) * top);
-}
-
-#include <stdio.h>
-void	print_stack(t_circular_stack *stack);
-static void	push_chunks(t_swap_stack *swap)
-{
-	long target;
-	int chunk_size;
-	int chunk_idx;
-
-	chunk_size = swap->a.capacity / 11 + 1;
-	chunk_idx = 0;
-	while (swap->a.len > 3)
-	{
-		target = find_chunk_member(&swap->a, chunk_size, chunk_idx);
-		while (target)
-		{
-			if (target > 0)
-				rra(swap, 1);
-			else
-				ra(swap, 1);
-			target += (target > 0) * -1 + (target < 0) * 1;
-		}
-		pb(swap, 1);
-		if (stack_get(&swap->b, -1)->rank < swap->b.len)
-			rb(swap, 1);
-		chunk_idx = swap->b.len / chunk_size;
-	}
-	exit(0);
-}
-
 void	apply_turk(t_swap_stack *swap)
 {
 	t_node	*tg;
 
+	if (stack_sorted(&swap->a))
+		return ;
 	calculate_rank(swap);
 	push_chunks(swap);
 	sort_3(swap);
