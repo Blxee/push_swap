@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include <malloc.h>
 
-static int	apply_oprations(t_swap_stack *swap)
+static t_operation	*parse_operations(void)
 {
 	static t_operation	arr[][127][127] = {
 	['s'] = {['a'] = {['\n'] = sa}, ['b'] = {['\n'] = sb},
@@ -20,28 +21,29 @@ static int	apply_oprations(t_swap_stack *swap)
 	['p'] = {['a'] = {['\n'] = pa}, ['b'] = {['\n'] = pb}},
 	['r'] = {['a'] = {['\n'] = ra}, ['b'] = {['\n'] = rb},
 	['r'] = {['a'] = rra, ['b'] = rrb, ['r'] = rrr}}};
+	static t_operation			operations[10000];
+	int	i;
 	char				*buf;
-	t_operation			op;
 
+	i = ~0;
 	while (1)
 	{
 		buf = (char [4]){0};
-		op = NULL;
+		operations[++i] = NULL;
 		if (read(0, buf, 3) <= 0)
-			return (1);
+			return (operations);
 		if (buf[2] != '\n' && ((read(0, buf + 3, 1) == 1) * buf[3]) != '\n')
-			return (0);
-		op = arr[(size_t)buf[0]][(size_t)buf[1]][(size_t)buf[2]];
-		if (!op)
-			return (0);
-		op(swap, 0);
+			return (NULL);
+		operations[i] = arr[(size_t)buf[0]][(size_t)buf[1]][(size_t)buf[2]];
+		if (!operations[i])
+			return (NULL);
 	}
-	return (1);
 }
 
 int	main(int argc, char **argv)
 {
 	t_swap_stack			*swap;
+	t_operation *operations;
 
 	if (argc <= 1)
 		return (0);
@@ -49,8 +51,11 @@ int	main(int argc, char **argv)
 	if (!swap)
 		return (0);
 	parse_args(swap, argc, argv);
-	if (!apply_oprations(swap))
+	operations = parse_operations();
+	if (!operations)
 		return (ft_putstr_fd(2, "Error\n"), swap_stack_free(&swap), 255);
+	while (*operations)
+		(*operations++)(swap, 0);
 	if (stack_sorted(&swap->a) && swap->b.len == 0)
 		ft_putstr_fd(1, "OK\n");
 	else

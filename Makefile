@@ -14,7 +14,7 @@ PUSH_SWAP_OBJS = $(PUSH_SWAP_SRCS:.c=.o)
 
 BONUS_NAME = checker
 
-CHECKER_SRCS = checker.c  push_operations.c reverse_rotate_operations.c \
+CHECKER_SRCS = checker_bonus.c  push_operations.c reverse_rotate_operations.c \
 			   rotate_operations.c swap_operations.c stack_utils.c \
 			   swap_stack_utils.c ft_putstr_fd.c count_args.c parse_args.c \
 			   ft_isspace.c is_number_repeated.c ft_split.c ft_atoi.c
