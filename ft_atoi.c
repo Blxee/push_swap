@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 14:52:36 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/01 11:18:21 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/12 20:20:12 by blxee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	ft_atoi(const char *nptr, int *fail)
 	while (ft_isspace(nptr[i]))
 		i++;
 	ft_setsign(&sign, &i, nptr);
+	if (!nptr[i])
+		*fail = 1;
 	while (nptr[i] && !ft_isspace(nptr[i]))
 	{
 		if (!ft_isdigit(nptr[i]))
