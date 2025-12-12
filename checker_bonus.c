@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
+/*   checker_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 11:34:31 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/02 15:12:18 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/12 08:09:35 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static t_operation	*parse_operations(void)
 	['s'] = {['\n'] = ss}},
 	['p'] = {['a'] = {['\n'] = pa}, ['b'] = {['\n'] = pb}},
 	['r'] = {['a'] = {['\n'] = ra}, ['b'] = {['\n'] = rb},
-	['r'] = {['a'] = rra, ['b'] = rrb, ['r'] = rrr}}};
-	static t_operation			operations[10000];
-	int	i;
+	['r'] = {['\n'] = rr, ['a'] = rra, ['b'] = rrb, ['r'] = rrr}}};
+	static t_operation	operations[10000];
+	int					i;
 	char				*buf;
 
 	i = ~0;
@@ -43,7 +43,7 @@ static t_operation	*parse_operations(void)
 int	main(int argc, char **argv)
 {
 	t_swap_stack			*swap;
-	t_operation *operations;
+	t_operation				*operations;
 
 	if (argc <= 1)
 		return (0);
