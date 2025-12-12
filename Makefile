@@ -42,4 +42,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONE: clean bonus
+.PHONY: clean bonus
