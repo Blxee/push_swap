@@ -6,7 +6,7 @@
 /*   By: atahiri- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:54:37 by atahiri-          #+#    #+#             */
-/*   Updated: 2025/12/12 08:15:38 by atahiri-         ###   ########.fr       */
+/*   Updated: 2025/12/13 08:49:33 by atahiri-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 		return (0);
 	swap = swap_stack_new(count_args(argc, argv));
 	if (!swap)
-		return (0);
+		return (-1);
 	parse_args(swap, argc, argv);
 	apply_turk(swap);
 	swap_stack_free(&swap);
