@@ -17,6 +17,8 @@ void	sa(t_swap_stack *swap, int show)
 	t_circular_stack	*stack;
 	t_node				tmp;
 
+	if (!swap || !swap->a.buf)
+		return ;
 	if (show)
 		ft_putstr_fd(1, "sa\n");
 	stack = &swap->a;
@@ -32,6 +34,8 @@ void	sb(t_swap_stack *swap, int show)
 	t_circular_stack	*stack;
 	t_node				tmp;
 
+	if (!swap || !swap->b.buf)
+		return ;
 	if (show)
 		ft_putstr_fd(1, "sb\n");
 	stack = &swap->b;

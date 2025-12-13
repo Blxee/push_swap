@@ -19,7 +19,7 @@ static long	find_chunk_member(t_circular_stack *stack, int c_size, int c_i)
 	int		bottom;
 
 	top = 0;
-	while (1)
+	while (stack)
 	{
 		if (-(--top) > stack->len)
 			return (999999);
@@ -29,7 +29,7 @@ static long	find_chunk_member(t_circular_stack *stack, int c_size, int c_i)
 	}
 	top++;
 	bottom = -1;
-	while (1)
+	while (stack)
 	{
 		if (++bottom >= stack->len)
 			return (999999);
@@ -49,7 +49,7 @@ void	push_chunks(t_swap_stack *swap)
 
 	chunk_size = 100;
 	chunk_idx = 0;
-	while (swap->a.len > 3)
+	while (swap && swap->a.len > 3)
 	{
 		target = find_chunk_member(&swap->a, chunk_size, chunk_idx);
 		while (target)

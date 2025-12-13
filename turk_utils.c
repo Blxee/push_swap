@@ -19,7 +19,7 @@ static void	bubble_sort(t_node **nodes, long len)
 	t_node	*tmp;
 
 	i = ~0;
-	while (++i < len)
+	while (nodes && ++i < len)
 	{
 		j = ~0;
 		while (++j < len - i - 1)
@@ -40,6 +40,8 @@ static void	calculate_rank(t_swap_stack *swap)
 {
 	long	i;
 
+	if (!swap)
+		return ;
 	swap->ranked = malloc(sizeof(t_node *) * swap->a.len);
 	if (!swap->ranked)
 		return (swap_stack_free(&swap), exit(-1));
@@ -57,7 +59,7 @@ static void	sort_3(t_swap_stack *swap)
 	int			min_idx;
 	int			max_idx;
 
-	while (++i < 3)
+	while (swap && ++i < 3)
 	{
 		if (i == 0 || stack_get(&swap->a, i)->val <= min)
 		{
@@ -80,7 +82,7 @@ static void	sort_3(t_swap_stack *swap)
 
 static void	prepare_rotate(t_swap_stack *swap, t_node *tg)
 {
-	while (total_cost(tg) > 0)
+	while (swap && tg && total_cost(tg) > 0)
 	{
 		if (tg->cost_a < 0 && tg->cost_b < 0)
 			rrr(swap, 1);
@@ -106,7 +108,7 @@ void	apply_turk(t_swap_stack *swap)
 {
 	t_node	*tg;
 
-	if (stack_sorted(&swap->a))
+	if (!swap || stack_sorted(&swap->a))
 		return ;
 	calculate_rank(swap);
 	push_chunks(swap);

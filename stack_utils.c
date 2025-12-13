@@ -14,6 +14,8 @@
 
 t_node	*stack_get(t_circular_stack *stack, long idx)
 {
+	if (!stack || !stack->buf)
+		return (NULL);
 	idx += stack->start;
 	while (idx < 0)
 		idx += stack->len;
@@ -25,7 +27,7 @@ void	stack_push_back(t_circular_stack *stack, t_node val)
 {
 	long	i;
 
-	if (!stack)
+	if (!stack || !stack->buf)
 		return ;
 	i = stack->len;
 	while (i > stack->start)
@@ -44,7 +46,7 @@ void	stack_push_front(t_circular_stack *stack, t_node val)
 {
 	long	i;
 
-	if (!stack)
+	if (!stack || !stack->buf)
 		return ;
 	i = stack->len;
 	while (i > stack->start)
@@ -61,7 +63,7 @@ t_node	stack_pop(t_circular_stack *stack)
 	long	i;
 	t_node	val;
 
-	if (!stack || stack->len == 0)
+	if (!stack || !stack->buf || stack->len == 0)
 		return ((t_node){});
 	val = *stack_get(stack, -1);
 	i = 0;
@@ -84,7 +86,7 @@ int	stack_sorted(t_circular_stack *stack)
 {
 	long	i;
 
-	if (!stack || stack->len <= 0)
+	if (!stack || !stack->buf || stack->len <= 0)
 		return (0);
 	i = 0;
 	while (i < stack->len - 1)

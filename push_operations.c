@@ -17,6 +17,8 @@ void	pa(t_swap_stack *swap, int show)
 	t_circular_stack	*a;
 	t_circular_stack	*b;
 
+	if (!swap || !swap->a.buf || !swap->b.buf)
+		return ;
 	if (show)
 		ft_putstr_fd(1, "pa\n");
 	a = &swap->a;
@@ -30,6 +32,8 @@ void	pb(t_swap_stack *swap, int show)
 	t_circular_stack	*a;
 	t_circular_stack	*b;
 
+	if (!swap || !swap->a.buf || !swap->b.buf)
+		return ;
 	if (show)
 		ft_putstr_fd(1, "pb\n");
 	a = &swap->a;

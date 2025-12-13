@@ -22,7 +22,7 @@ static int	find_min(t_swap_stack *swap)
 	min_rank = INT_MAX;
 	target_idx = 0;
 	i = ~0;
-	while (++i < swap->a.len)
+	while (swap && ++i < swap->a.len)
 	{
 		current = stack_get(&swap->a, i);
 		if (current->rank < min_rank)
@@ -44,7 +44,7 @@ static void	find_node_cost_a(t_swap_stack *swap, t_node *node)
 	min_rank = INT_MAX;
 	target_idx = 0;
 	i = ~0;
-	while (++i < swap->a.len)
+	while (swap && ++i < swap->a.len)
 	{
 		current = stack_get(&swap->a, i);
 		if (current->rank > node->rank && current->rank < min_rank)
@@ -70,7 +70,7 @@ t_node	*calculate_costs(t_swap_stack *swap)
 
 	min_cost = INT_MAX;
 	i = ~0;
-	while (++i < swap->b.len)
+	while (swap && ++i < swap->b.len)
 	{
 		current = stack_get(&swap->b, i);
 		if (i >= swap->b.len / 2)
@@ -91,6 +91,8 @@ int	total_cost(t_node *node)
 {
 	int	total;
 
+	if (!node)
+		return (0);
 	total = 0;
 	if (node->cost_a < 0)
 		total += -node->cost_a;

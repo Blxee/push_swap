@@ -16,6 +16,8 @@ void	ra(t_swap_stack *swap, int show)
 {
 	t_circular_stack	*a;
 
+	if (!swap || !swap->a.buf)
+		return ;
 	if (show)
 		ft_putstr_fd(1, "ra\n");
 	a = &swap->a;
@@ -28,6 +30,8 @@ void	rb(t_swap_stack *swap, int show)
 {
 	t_circular_stack	*b;
 
+	if (!swap || !swap->b.buf)
+		return ;
 	if (show)
 		ft_putstr_fd(1, "rb\n");
 	b = &swap->b;
