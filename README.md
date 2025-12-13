@@ -1,6 +1,6 @@
-# Push Swap
+_This project has been created as part of the 42 curriculum by atahiri-_
 
-This project has been created as part of the 42 curriculum by `atahiri-`.
+# Push Swap
 
 ## Description:
 
@@ -111,13 +111,28 @@ And to compile the bonus part (_checker_ program), run:
 
 ## Resources:
 
+### Tools:
+
 The following tools have been helpful during the making of this project:
 
 - **[gdb](https://en.wikipedia.org/wiki/GNU_Debugger)**: the C debugger was of immense importance for finding sneaky bugs.
 - **[seq](https://man7.org/linux/man-pages/man1/seq.1.html) command**: for testing purposes the seq command just gives a sequence of numbers, which you can then shuffle using the `shuf` command.
 - **[pushswap visualizer](https://push-swap-visualizer.vercel.app/)**: this simple app lets you prototype your ideas quickly. It proved to be useful.
 
+### Articles:
+
 And the following articles were used to get the general idea of the algorithms used:
 
 - [Push_Swap Turk algorithm explained in 6 steps](https://pure-forest.medium.com/push-swap-turk-algorithm-explained-in-6-steps-4c6650a458c0)
 - [Push_Swap: The least amount of moves with two stacks](https://medium.com/@jamierobertdawson/push-swap-the-least-amount-of-moves-with-two-stacks-d1e76a71789a)
+
+### AI usage:
+
+- AI was used mainly for explaining novel concepts and practical example walkthrough.
+- No line of code was written by AI.
+
+**Examples of AI prompts used:**
+
+- "Give me a walkthrought with a small set of numbers of the Chunks alhorithm!"
+- "How do i clear all the breakpoints in GDB?"
+- "Give me an example of the n log n complexity"
