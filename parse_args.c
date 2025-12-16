@@ -23,7 +23,7 @@ void	parse_args(t_swap_stack *swap, int argc, char **argv)
 	{
 		splt = ft_split(*(++argv));
 		if (!splt)
-			return (swap_stack_free(&swap), exit(0xffffffff));
+			return (swap_stack_free(&swap), exit(-1));
 		i = 0;
 		while (splt[i])
 			stack_push_front(&swap->a, (t_node){
@@ -33,10 +33,9 @@ void	parse_args(t_swap_stack *swap, int argc, char **argv)
 		while (splt[i])
 			free(splt[i++]);
 		free(splt);
-		if (i == 0 || fail || is_number_repeated(&swap->a))
-		{
+		if (i == 0 || fail)
 			return (ft_putstr_fd(2, "Error\n"),
 				swap_stack_free(&swap), exit(255));
-		}
 	}
+	is_number_repeated(swap);
 }

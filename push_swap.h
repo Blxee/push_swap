@@ -60,7 +60,7 @@ int						ft_isspace(int c);
 char					**ft_split(char const *s);
 int						ft_atoi(const char *nptr, int *fail);
 void					ft_putstr_fd(const int fd, const char *str);
-int						is_number_repeated(t_circular_stack *stack);
+void					is_number_repeated(t_swap_stack *swap);
 
 void					apply_turk(t_swap_stack *swap);
 t_node					*calculate_costs(t_swap_stack *swap);
